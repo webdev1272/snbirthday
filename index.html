@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday, Dear Friend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Colorful animated background */
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ffb347 0%, #ffccff 50%, #a1c4fd 100%);
+      
+      font-family: 'Segoe UI', cursive, sans-serif;
+    }
+    @keyframes bgMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 100vw 100vh; }
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      z-index: 2;
+    }
+
+    /* 3D Gift Box */
+    .gift-box {
+      width: 220px;
+      height: 220px;
+      position: relative;
+      perspective: 1000px;
+      margin-bottom: 30px;
+      transition: transform 1s cubic-bezier(.23,1.02,.62,.99);
+      transform-style: preserve-3d;
+    }
+
+    /* Box Base */
+    .box-base {
+      width: 200px;
+      height: 120px;
+      background: linear-gradient(135deg, #ff69b4 60%, #ff8c00 100%);
+      border-radius: 12px 12px 18px 18px;
+      position: absolute;
+      top: 80px;
+      left: 10px;
+      box-shadow: 0 10px 30px 0 #f06292c0, 0 2px 10px 0 #fff;
+      z-index: 1;
+      border: 4px solid #fff;
+    }
+
+    /* Box Lid */
+    .box-lid {
+      width: 220px;
+      height: 60px;
+      background: linear-gradient(135deg, #fff176 60%, #ff69b4 100%);
+      border-radius: 16px 16px 10px 10px;
+      position: absolute;
+      top: 50px;
+      left: 0;
+      z-index: 2;
+      box-shadow: 0 5px 15px 0 #ff8c00a0;
+      border: 4px solid #fff;
+      transform-origin: bottom center;
+      transition: transform 1s cubic-bezier(.23,1.02,.62,.99);
+    }
+
+    /* Ribbon */
+    .ribbon {
+      position: absolute;
+      left: 50%;
+      top: 60px;
+      width: 32px;
+      height: 100px;
+      background: linear-gradient(180deg, #ff1493 60%, #ff8c00 100%);
+      border-radius: 12px;
+      transform: translateX(-50%);
+      z-index: 3;
+      box-shadow: 0 0 10px #fff17680;
+    }
+    .ribbon-horizontal {
+      position: absolute;
+      left: 10px;
+      top: 105px;
+      width: 200px;
+      height: 20px;
+      background: linear-gradient(90deg, #ff1493 60%, #ff8c00 100%);
+      border-radius: 8px;
+      z-index: 3;
+      box-shadow: 0 0 10px #fff17680;
+    }
+
+    /* Tap Button */
+    .tap-btn {
+      position: absolute;
+      left: 50%;
+      top: 120px;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      padding: 14px 36px;
+      background: linear-gradient(90deg, #ff69b4 50%, #fff176 100%);
+      color: #fff;
+      font-size: 1.4rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 28px;
+      box-shadow: 0 4px 16px #ff69b4a0;
+      cursor: pointer;
+      outline: none;
+      animation: pulse 1.2s infinite;
+      letter-spacing: 1px;
+      transition: background 0.3s;
+      text-shadow: 0 2px 8px #ff8c00a0;
+    }
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.09); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* Gift box open animation */
+    .opened .box-lid {
+      transform: rotateX(-120deg) translateY(-60px) scaleX(1.05);
+      box-shadow: 0 40px 40px #ff8c00a0;
+    }
+    .opened .gift-box {
+      transform: scale(1.07) translateY(-40px) rotateZ(-2deg);
+    }
+    .opened .tap-btn {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Birthday message and photo */
+    .wish-content {
+      opacity: 0;
+      pointer-events: none;
+      margin-top: 20px;
+      text-align: center;
+      transition: opacity 1.2s;
+      max-width: 90vw;
+    }
+    .opened .wish-content {
+      opacity: 1;
+      pointer-events: auto;
+      animation: popIn 1.1s;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.8) translateY(30px); opacity: 0; }
+      80% { transform: scale(1.1) translateY(-8px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .wish-content h1 {
+      font-size: 2.2rem;
+      color: #fff;
+      background: linear-gradient(90deg, #ff69b4 40%, #fff176 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 14px #ff8c0070;
+    }
+    .wish-content p {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 18px;
+      text-shadow: 0 1px 8px #ff69b4a0;
+    }
+    .wish-content img {
+      width: 200px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 6px solid #fff176;
+      box-shadow: 0 4px 32px #ff69b4a0;
+      margin-top: 10px;
+      animation: imgPop 1.2s;
+    }
+    @keyframes imgPop {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 999;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 12px; height: 18px;
+      border-radius: 4px;
+      opacity: 0.8;
+      animation: confetti-fall 3.5s linear forwards;
+    }
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(100vh) rotateZ(360deg);
+        opacity: 0.5;
+      }
+    }
+  </style>
+  
+<style>
+        #balloon-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.balloon {
+  position: absolute;
+  bottom: -100px;
+  width: 40px;
+  height: 60px;
+  border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+  opacity: 0.8;
+  animation: float 8s linear infinite;
+}
+
+@keyframes float {
+  to {
+    transform: translateY(-110vh) scale(1.1);
+    opacity: 0.5;
+  }
+}
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="gift-box" id="giftBox">
+      <div class="box-lid"></div>
+      <div class="box-base"></div>
+      <div class="ribbon"></div>
+      <div class="ribbon-horizontal"></div>
+      <button class="tap-btn" id="tapBtn">🎁 Tap Here</button>
+    </div>
+    <div class="wish-content" id="wishContent">
+      <h1>Happy Birthday, Dear Friend! 💖</h1>
+      <img src="PHOTO 1.jpg" alt="Image not found">
+      <p>
+        Wishing the most beautiful girl in the world a magical birthday!<br>
+        You fill my life with joy, love, and endless smiles.<br>
+        May your day be as wonderful as you are. I wish Many returns of this day!  💝
+      </p>
+      <button type="submit" onclick="location.href='page2.html'">Proceed</button>
+    <div id="balloon-container"></div>
+    </div>
+  </div>
+  <!-- Confetti Layer -->
+  <div class="confetti" id="confetti"></div>
+  <!-- Background Music -->
+  <audio id="bgMusic" src="audio1.mp3" preload="auto"></audio>
+  <script>
+const balloonContainer = document.getElementById("balloon-container");
+
+function random(num) {
+  return Math.floor(Math.random() * num);
+}
+
+function getRandomStyles() {
+  const colors = [
+    "rgba(255,99,132,0.7)",
+    "rgba(54,162,235,0.7)",
+    "rgba(255,206,86,0.7)",
+    "rgba(75,192,192,0.7)",
+    "rgba(153,102,255,0.7)",
+    "rgba(255,159,64,0.7)"
+  ];
+  const color = colors[random(colors.length)];
+  const left = random(window.innerWidth - 40);
+  const duration = 6 + random(5); // 6-10 seconds
+  const delay = random(5); // 0-4 seconds
+  return `
+    background: ${color};
+    left: ${left}px;
+    animation-duration: ${duration}s;
+    animation-delay: ${delay}s;
+  `;
+}
+
+function createBalloons(num) {
+  for (let i = 0; i < num; i++) {
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+    balloon.style.cssText = getRandomStyles();
+    balloonContainer.appendChild(balloon);
+  }
+}
+
+window.onload = () => {
+  createBalloons(30); // Number of balloons
+};
+</script>
+  <script>
+    // Confetti colors
+    const confettiColors = [
+      "#ff69b4", "#fff176", "#ff8c00", "#7c4dff", "#00e676", "#40c4ff", "#ff1744"
+    ];
+
+    // Confetti generator
+    function launchConfetti() {
+      const confetti = document.getElementById('confetti');
+      for (let i = 0; i < 80; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.top = (Math.random() * -20) + 'vh';
+       
+        piece.style.animationDelay = (Math.random() * 1.5) + 's';
+        confetti.appendChild(piece);
+        setTimeout(() => confetti.removeChild(piece), 4000);
+      }
+    }
+
+    // Main logic
+    const tapBtn = document.getElementById('tapBtn');
+    const giftBox = document.getElementById('giftBox');
+    const wishContent = document.getElementById('wishContent');
+    const bgMusic = document.getElementById('bgMusic');
+
+    tapBtn.addEventListener('click', function() {
+      giftBox.classList.add('opened');
+      document.body.classList.add('opened');
+      setTimeout(() => {
+        wishContent.classList.add('opened');
+        launchConfetti();
+        bgMusic.play();
+      }, 900);
+    });
+
+    // Optional: allow music to be played again if user taps the message
+    wishContent.addEventListener('click', () => {
+      if (bgMusic.paused) bgMusic.play();
+    });
+  </script>
+</body>
+</html>
