@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Blessing </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+  #heart-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.heart {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  animation: fall linear;
+}
+
+.heart-shape {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-30px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) scale(0.7);
+    opacity: 0.7;
+  }
+}
+</style>
+<style>
+  body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Poppins', cursive, sans-serif;
+  background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+  overflow-x: hidden;
+  position: relative;
+}
+
+.container {
+  max-width: 800px;
+  margin: 60px auto;
+  background: rgba(255,255,255,0.75);
+  border-radius: 30px;
+  box-shadow: 0 12px 40px 0 rgba(255, 99, 132, 0.3), 0 2px 4px #fff;
+  padding: 40px 30px 50px 30px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.birthday-title {
+  font-size: 2.8rem;
+  color: #e75480;
+  text-shadow: 2px 2px 8px #fff, 0 2px 10px #f9c6c3;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+}
+
+.images-3d {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+.img-3d {
+  width: 140px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px #ffb6b9, 0 2px 8px #fff, 0 0 0 8px #fff5;
+  transform: perspective(400px) rotateY(-5deg) scale(1.04);
+  transition: transform 0.4s;
+}
+.img-3d:hover {
+  transform: perspective(400px) rotateY(5deg) scale(1.1);
+}
+
+.message-box {
+  margin: 30px 0;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #f9c6c3;
+  padding: 18px 10px;
+}
+.wish-msg, .blessing-msg {
+  font-size: 1.2rem;
+  color: #b83260;
+  margin: 10px 0;
+  letter-spacing: 1px;
+}
+
+.tap-btn {
+  margin-top: 30px;
+  padding: 20px 60px;
+  font-size: 1.6rem;
+  color: #fff;
+  background: linear-gradient(90deg, #ffb6b9, #f9c6c3, #e75480);
+  border: none;
+  border-radius: 40px;
+  box-shadow: 0 6px 20px #e75480a0, 0 1px 4px #fff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: tapPulse 1.2s infinite alternate;
+  transition: transform 0.2s;
+}
+@keyframes tapPulse {
+  0% { box-shadow: 0 0 20px #e75480a0, 0 1px 4px #fff; }
+  100% { box-shadow: 0 0 40px #e75480a0, 0 1px 8px #fff; transform: scale(1.05);}
+}
+.tap-btn:active {
+  transform: scale(0.98);
+}
+
+.decor {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+.flower { top: 10px; left: 20px; width: 120px; }
+.lights { top: 0; right: 0; width: 100px; }
+.candle { bottom: 20px; left: 30px; width: 70px; }
+.stickers { bottom: 20px; right: 30px; width: 90px; }
+</style>
+</head>
+<body>
+  <!-- Decorations -->
+  <img src="happybirthdaysticker.webp" class="decor flower" alt="Flowers">
+  <img src="lightsticker.webp" class="decor lights" alt="Lights">
+  <img src="candlesticker.png" class="decor candle" alt="Candle">
+  <img src="flowersticker.png" class="decor stickers" alt="Stickers">
+
+  <!-- Background Audio -->
+  <audio id="audio2" src="audio2.mp3" autoplay loop></audio>
+  <div class="container">
+    <h1 class="birthday-title">Happy Birthday,Dear Shashikala! 🎂 </h1>
+    <h5>Tap anyehere on the screen  </h5>
+    <div class="images-3d">
+      <img src="PHOTO 1.jpg" alt="GF1" class="img-3d">
+      <img src="PHOTO 2.jpg" alt="GF2" class="img-3d">
+      <img src="PHOTO 3.jpg" alt="GF3" class="img-3d">
+    </div>
+    <div class="message-box">
+      <p class="wish-msg">
+        Wishing the happiest birthday to the most beautiful soul in my life! <br>
+        May your day be filled with love, laughter, and endless joy. <br>
+        You are my sunshine, my inspiration, and my everything. 💖
+      </p>
+      <p class="blessing-msg">
+        May all your dreams come true, and may happiness always find you. <br>
+        You deserve all the love and blessings in the world. <br>
+        Happy birthday, sweetheart! 🌹✨
+      </p>
+    </div>
+    <button id="tap-btn" class="tap-btn">Tap Here</button>
+  </div>
+  <div id="heart-rain"></div>
+  <h5> Best Regard:- Neeraj Yadav</h5>
+  <script>
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.animationDuration = (2 + Math.random() * 3) + 's'; // 2s to 5s
+
+  // Optional: Randomize heart color and size
+  const colors = ['#e25555', '#ff69b4', '#ff4d6d', '#ff85a1', '#d72660'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  const scale = 0.7 + Math.random() * 0.6;
+
+  heart.innerHTML = `
+    <svg class="heart-shape" viewBox="0 0 32 29.6" style="fill:${color}; transform: scale(${scale});">
+      <path d="M23.6,0c-2.7,0-5.1,1.3-6.6,3.3C15.5,1.3,13.1,0,10.4,0C4.7,0,0,4.7,0,10.4
+        c0,6.1,5.8,11.1,14.5,18.3l1.5,1.3l1.5-1.3C26.2,21.5,32,16.5,32,10.4C32,4.7,27.3,0,23.6,0z"/>
+    </svg>
+  `;
+
+  heart.style.top = '-30px';
+
+  document.getElementById('heart-rain').appendChild(heart);
+
+  // Remove the heart after animation
+  heart.addEventListener('animationend', () => heart.remove());
+}
+
+// Create hearts at intervals
+setInterval(createHeart, 250);
+</script>
+  <script>
+    document.getElementById('tap-btn').addEventListener('click', function() {
+  // Button click animation
+  this.style.transform = 'scale(0.95)';
+  setTimeout(() => {
+    window.location.href = "page3.html";
+  }, 300); // Short delay for button press effect
+});
+
+// Optional: Autoplay audio on user gesture
+window.addEventListener('click', function() {
+  const audio = document.getElementById('audio2');
+  if (audio && audio.paused) {
+    audio.play();
+  }
+}, { once: true });
+  </script>
+</body>
+</html>
